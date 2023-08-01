@@ -26,12 +26,24 @@ class HomePage(ttk.Frame):
 
         self.masthead = ttk.Label(self, text="Homepage")
         self.intro = ttk.Label(self, text="Welcome to this project\nSelect an object below.")
+        self.frame = ttk.Frame(self)
 
+        # buttons to go into the frame
+        self.objects = self.callbacks['get_objects']()  # get objects as a list
 
+        self.frame_btns = []
+        for obj in self.objects:
+            self.frame_btns.append(
+                ttk.Button(self.frame, text=obj.title())
+            )
+
+        for btn in self.frame_btns:
+            btn.pack()
 
         # set object in view using grid geometry manager
         self.masthead.grid(row=0, column=0)
         self.intro.grid(row=1, column=0)
+        self.frame.grid(row=2, column=0)
 
 
 class ObjectPage(ttk.Frame):

@@ -12,7 +12,9 @@ class Application(tk.Tk):
         self.wm_title("Multi View")
         self.geometry("600x400")
 
-        self.callbacks = {}
+        self.callbacks = {
+            'get_objects': self.get_objects,
+        }
 
         self.datamodel = DataModel()
 
@@ -24,3 +26,8 @@ class Application(tk.Tk):
 
         # initialize Homepage view
         self.homepage.pack(fill="both", expand=True)
+
+    def get_objects(self):
+        """Returns keys from model's data attribute as a list."""
+
+        return list(self.datamodel.data.keys())
