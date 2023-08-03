@@ -52,7 +52,7 @@ class HomePage(ttk.Frame):
 
 class ObjectPage(ttk.Frame):
     """
-    View for selected object.
+    View for selected object page.
     """
 
     def __init__(self, master, callbacks, *args, **kwargs):
@@ -112,12 +112,55 @@ class ObjectPage(ttk.Frame):
 
 
     def display_detail_view(self, det):
-        print(det)
-        #self.callbacks['display_detail_view'](det)
+        self.callbacks['display_detail_view'](det)
 
 
 class DetailPage(ttk.Frame):
-    pass
+    """
+    View for selected detail page.
+    """
+
+    def __init__(self, master, callbacks, *args, **kwargs):
+        """
+        Initialize Detail Page View
+
+        :arguments
+        ----------
+        master : tkinter object
+            object that DetailPage resides in
+        callbacks : dictionary
+            contains references to callable methods in `master`
+        """
+
+        super().__init__(master, *args, **kwargs)
+
+        self.callbacks = callbacks
+
+        self.masthead_title_text = tk.StringVar()
+
+        self.masthead = ttk.Frame(self)
+        self.masthead_title = ttk.Label(self.masthead, textvariable=self.masthead_title_text)
+        self.masthead_title.grid(row=0, column=0, sticky='w')
+        self.masthead_button = ttk.Button(self.masthead, text="Home", command=self.callbacks['display_homepage'])
+        self.masthead_button.grid(row=0, column=1, sticky='e')
+        self.masthead.grid_columnconfigure(1, weight=1)
+        self.masthead.grid(row=0, column=0, sticky='nsew')
+
+        # configure rows and columns with weight
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=1)
+
+        # frame to hold buttons
+        self.frame = ttk.Frame(self)
+        self.frame.grid(row=2, column=0)
+
+    def refresh_page(self, obj, det, message):
+        self.masthead_title_text.set(f"Detail Page - {obj.title()} - {det.title()}")
+
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+        ttk.Label(self.frame, text=message).pack()
 
 
 class VisibilityPage(ttk.Frame):

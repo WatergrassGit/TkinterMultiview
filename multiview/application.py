@@ -18,6 +18,7 @@ class Application(tk.Tk):
             'display_homepage': self.display_homepage,
             'display_object_view': self.display_object_view,
             'get_details': self.get_details,
+            'display_detail_view': self.display_detail_view,
         }
 
         # keep track of view object and detail page
@@ -31,12 +32,13 @@ class Application(tk.Tk):
         # create view objects
         self.homepage = v.HomePage(self, self.callbacks)
         self.objectpage = v.ObjectPage(self, self.callbacks)
-        self.detailpage = v.DetailPage()
+        self.detailpage = v.DetailPage(self, self.callbacks)
         self.visibilitypage = v.VisibilityPage()
 
         # initialize view
         self.homepage.grid(row=0, column=0, sticky="nsew")
         self.objectpage.grid(row=0, column=0, sticky="nsew")
+        self.detailpage.grid(row=0, column=0, sticky="nsew")
 
         # configure rows and columns with weight
         self.grid_columnconfigure(0, weight=1)
@@ -85,3 +87,22 @@ class Application(tk.Tk):
         """
 
         return list(self.datamodel.data[self.active_view['object']].keys())
+    
+    def display_detail_view(self, det):
+        """
+        Displays the detail view corresponding to input argument det and
+        the current active view.
+        
+        
+        :arguments
+        ----------
+        det : string
+            name of asssociated detail page to be displayed in the Detail Page
+        """
+
+        obj = self.active_view['object']
+        message = self.datamodel.data[obj][det]['text']
+
+        self.detailpage.refresh_page(obj, det, message)
+        self.active_view.update({'detail': det})
+        self.show_view(self.detailpage)
