@@ -122,7 +122,8 @@ class DetailPage(ttk.Frame):
 
     def __init__(self, master, callbacks, *args, **kwargs):
         """
-        Initialize Detail Page View
+        Initialize Detail Page View.
+        Create detail page using masthead, header and content blocks.
 
         :arguments
         ----------
@@ -136,26 +137,33 @@ class DetailPage(ttk.Frame):
 
         self.callbacks = callbacks
 
-        self.masthead_title_text = tk.StringVar()
-
-        self.masthead = ttk.Frame(self)
-        self.masthead_title = ttk.Label(self.masthead, textvariable=self.masthead_title_text)
-        self.masthead_title.grid(row=0, column=0, sticky='w')
-        self.masthead_button = ttk.Button(self.masthead, text="Home", command=self.callbacks['display_homepage'])
-        self.masthead_button.grid(row=0, column=1, sticky='e')
-        self.masthead.grid_columnconfigure(1, weight=1)
-        self.masthead.grid(row=0, column=0, sticky='nsew')
-
         # configure rows and columns with weight
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(0, weight=1)
+        self.grid_rowconfigure(2, weight=1)  
 
-        # frame to hold buttons
+        # section for masthead
+        self.masthead = ttk.Frame(self)
+        self.masthead.grid(row=0, column=0, sticky='nswe')
+        self.masthead.grid_columnconfigure(1, weight=1)
+
+        self.masthead_title = ttk.Label(self.masthead, text= "Detail Page")
+        self.masthead_back_button = ttk.Button(self.masthead, text="Back", command=self.callbacks['display_previous'])
+        self.masthead_home_button = ttk.Button(self.masthead, text="Home", command=self.callbacks['display_homepage'])
+        self.masthead_title.grid(row=0, column=0, sticky='w')
+        self.masthead_back_button.grid(row=0, column=1, sticky='e')
+        self.masthead_home_button.grid(row=0, column=2, sticky='e')
+
+        # section for detail page header
+        self.header_text = tk.StringVar()
+        self.header = ttk.Label(self, textvariable=self.header_text)
+        self.header.grid(row=1, column=0, sticky='w')
+
+        # section for detail page content
         self.frame = ttk.Frame(self)
         self.frame.grid(row=2, column=0)
 
     def refresh_page(self, obj, det, message):
-        self.masthead_title_text.set(f"Detail Page - {obj.title()} - {det.title()}")
+        self.header_text.set(f"{obj.title()}: {det.title()}")
 
         for widget in self.frame.winfo_children():
             widget.destroy()

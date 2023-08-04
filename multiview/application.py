@@ -19,6 +19,7 @@ class Application(tk.Tk):
             'display_object_view': self.display_object_view,
             'get_details': self.get_details,
             'display_detail_view': self.display_detail_view,
+            'display_previous': self.display_previous,
         }
 
         # keep track of view object and detail page
@@ -106,3 +107,9 @@ class Application(tk.Tk):
         self.detailpage.refresh_page(obj, det, message)
         self.active_view.update({'detail': det})
         self.show_view(self.detailpage)
+
+    def display_previous(self):
+        """Called from detail page to go back to previous object view."""
+
+        self.active_view.update({'detail': None})
+        self.show_view(self.objectpage)
