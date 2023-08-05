@@ -25,8 +25,11 @@ class HomePage(ttk.Frame):
 
         self.callbacks = callbacks
 
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(2, weight=1)  
+
         self.masthead = ttk.Label(self, text="Homepage")
-        self.intro = ttk.Label(self, text="Welcome to this project\nSelect an object below.")
+        self.intro = ttk.Label(self, text="Welcome to this project! Select a choice below.")
         self.frame = ttk.Frame(self)
 
         # buttons to go into the frame
