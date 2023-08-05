@@ -3,26 +3,26 @@ class DataModel:
 
     def __init__(self):
         self.data = {
-            'object 1': {
-                'detail 1': {
+            'Python': {
+                'release': {
                     'visible': True,
                     'text': "The Python programming language was first released on February 20, 1991."
                 },
-                'detail 2': {
+                'python 3': {
                     'visible': True,
                     'text': "The Python 3.0 release date was December 3, 2008."
                 },
-                'detail 3': {
+                'creator': {
                     'visible': True,
                     'text': "The original creator of Python is Guido van Rossum."
                 },
             },
-            'object 2': {
-                'detail 1': {
+            'Tkinter': {
+                'release': {
                     'visible': True,
                     'text': "Tkinter is a GUI toolkit for Python released in 1991."
                 },
-                'detail 2': {
+                'meaning': {
                     'visible': True,
                     'text': "Tkinter stands for Tk interface."
                 },
