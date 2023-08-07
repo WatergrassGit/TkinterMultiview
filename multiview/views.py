@@ -28,7 +28,7 @@ class HomePage(ttk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(2, weight=1)  
 
-        self.masthead = ttk.Label(self, text="Homepage")
+        self.masthead = ttk.Label(self, text="Homepage", style='masthead.TLabel')
         self.intro = ttk.Label(self, text="Welcome to this project! Select a choice below.")
         self.frame = ttk.Frame(self)
 
@@ -83,14 +83,14 @@ class ObjectPage(ttk.Frame):
         self.masthead.grid_columnconfigure(1, weight=1)
         self.masthead.grid(row=0, column=0, sticky='nsew')
 
-        self.masthead_title = ttk.Label(self.masthead, text='Object Page')
+        self.masthead_title = ttk.Label(self.masthead, text='Object Page', style='masthead.TLabel')
         self.masthead_button = ttk.Button(self.masthead, text="Home", command=self.callbacks['display_homepage'])        
         self.masthead_title.grid(row=0, column=0, sticky='w')
         self.masthead_button.grid(row=0, column=1, sticky='e')
 
         # section for object page header
         self.header_text = tk.StringVar()
-        self.header = ttk.Label(self, textvariable=self.header_text)
+        self.header = ttk.Label(self, textvariable=self.header_text, style='header.TLabel')
         self.header.grid(row=1, column=0, sticky='w')
 
         # section for object page content
@@ -154,7 +154,7 @@ class DetailPage(ttk.Frame):
         self.masthead.grid(row=0, column=0, sticky='nswe')
         self.masthead.grid_columnconfigure(1, weight=1)
 
-        self.masthead_title = ttk.Label(self.masthead, text= "Detail Page")
+        self.masthead_title = ttk.Label(self.masthead, text= "Detail Page", style='masthead.TLabel')
         self.masthead_back_button = ttk.Button(self.masthead, text="Back", command=self.callbacks['display_previous'])
         self.masthead_home_button = ttk.Button(self.masthead, text="Home", command=self.callbacks['display_homepage'])
         self.masthead_title.grid(row=0, column=0, sticky='w')
@@ -163,7 +163,7 @@ class DetailPage(ttk.Frame):
 
         # section for detail page header
         self.header_text = tk.StringVar()
-        self.header = ttk.Label(self, textvariable=self.header_text)
+        self.header = ttk.Label(self, textvariable=self.header_text, style='header.TLabel')
         self.header.grid(row=1, column=0, sticky='w')
 
         # section for detail page content

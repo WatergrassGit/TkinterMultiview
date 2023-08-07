@@ -2,6 +2,8 @@ import tkinter as tk
 from tkinter import ttk
 from . models import DataModel
 from . import views as v
+from . styles import StyleSheet
+
 
 class Application(tk.Tk):
     """Controller for model and views."""
@@ -29,6 +31,8 @@ class Application(tk.Tk):
         }
 
         self.datamodel = DataModel()
+
+        self.stylesheet = StyleSheet(self, self.callbacks)
 
         # create view objects
         self.homepage = v.HomePage(self, self.callbacks)
