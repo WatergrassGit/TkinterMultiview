@@ -21,7 +21,10 @@ class Application(tk.Tk):
             'display_object_view': self.display_object_view,
             'get_details': self.get_details,
             'display_detail_view': self.display_detail_view,
-            'display_previous': self.display_previous,
+            'change_view_detail_to_object': self.change_view_detail_to_object,
+            'display_settings_view': self.display_settings_view,
+            'close_settings_view': self.close_settings_view,
+            'update_theme': self.update_theme,
         }
 
         # keep track of view object and detail page
@@ -38,12 +41,13 @@ class Application(tk.Tk):
         self.homepage = v.HomePage(self, self.callbacks)
         self.objectpage = v.ObjectPage(self, self.callbacks)
         self.detailpage = v.DetailPage(self, self.callbacks)
-        self.visibilitypage = v.VisibilityPage()
+        self.settingspage = v.SettingsPage(self, self.callbacks)
 
         # initialize view
         self.homepage.grid(row=0, column=0, sticky="nsew")
         self.objectpage.grid(row=0, column=0, sticky="nsew")
         self.detailpage.grid(row=0, column=0, sticky="nsew")
+        self.settingspage.grid(row=0, column=0, sticky="nsew")
 
         # configure rows and columns with weight
         self.grid_columnconfigure(0, weight=1)
@@ -112,8 +116,27 @@ class Application(tk.Tk):
         self.active_view.update({'detail': det})
         self.show_view(self.detailpage)
 
-    def display_previous(self):
+    def change_view_detail_to_object(self):
         """Called from detail page to go back to previous object view."""
 
         self.active_view.update({'detail': None})
         self.show_view(self.objectpage)
+
+    def display_settings_view(self):
+        """Displays the settings page on top."""
+
+        self.show_view(self.settingspage)
+
+    def close_settings_view(self):
+        """Return to last open page before settings were opened."""
+
+        if self.active_view['detail'] is None:
+            if self.active_view['object'] is None:
+                self.show_view(self.homepage)
+            else:
+                self.show_view(self.objectpage)
+        else:
+            self.show_view(self.detailpage)
+
+    def update_theme(self, theme):
+        self.stylesheet.set_theme(theme)
