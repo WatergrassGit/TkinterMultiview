@@ -10,5 +10,27 @@ class StyleSheet(ttk.Style):
         self.configure('masthead.TLabel', font=('Helvetica', 18))
         self.configure('header.TLabel', font=('helvetica', 12))
 
-        #self.configure('TButton', foreground='maroon')
-        #self.configure('home.TButton', foreground='green')
+        self.set_theme_light()
+
+    def set_theme_light(self):
+        bg = '#EDEAE0'  # Alabaster
+        text_color = 'maroon'
+
+        self.set_background_color(bg)
+        self.set_label_color(text_color)
+
+    def set_theme_dark(self):
+        bg = '#4E6E81'  # Aegean Blue
+        text_color = '#F0EFE7'  # White Dove
+
+        self.set_background_color(bg)
+        self.set_label_color(text_color)
+
+
+    def set_background_color(self, bg):
+        self.configure('TFrame', background=bg)
+        self.configure('TLabel', background=bg)
+        self.configure('TButton', background=bg)
+
+    def set_label_color(self, text_color):
+        self.configure('TLabel', foreground=text_color)
