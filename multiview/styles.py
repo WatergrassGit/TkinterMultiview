@@ -26,7 +26,6 @@ class StyleSheet(ttk.Style):
         self.set_background_color(bg)
         self.set_label_color(text_color)
 
-
     def set_background_color(self, bg):
         self.configure('TFrame', background=bg)
         self.configure('TLabel', background=bg)
