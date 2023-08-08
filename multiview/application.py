@@ -32,7 +32,7 @@ class Application(tk.Tk):
 
         self.datamodel = DataModel()
 
-        self.stylesheet = StyleSheet(self, self.callbacks)
+        self.stylesheet = StyleSheet()
 
         # create view objects
         self.homepage = v.HomePage(self, self.callbacks)
