@@ -15,15 +15,20 @@ class Application(tk.Tk):
         self.geometry("600x400")
 
         self.callbacks = {
-            'get_objects': self.get_objects,
-            'set_object': self.set_object,
+            # callbacks for changing a view
             'display_homepage': self.display_homepage,
             'display_object_view': self.display_object_view,
-            'get_details': self.get_details,
             'display_detail_view': self.display_detail_view,
-            'change_view_detail_to_object': self.change_view_detail_to_object,
             'display_settings_view': self.display_settings_view,
-            'close_settings_view': self.close_settings_view,
+
+            'change_view_detail_to_object': self.change_view_detail_to_object,
+            'close_settings_view': self.close_settings_view,            
+
+            # callbacks for getting current object or detail
+            'get_objects': self.get_objects,
+            'get_details': self.get_details,
+
+            # callback for updating theme
             'update_theme': self.update_theme,
         }
 
@@ -56,11 +61,6 @@ class Application(tk.Tk):
         # start with Homepage on top
         self.show_view(self.homepage)
 
-    def get_objects(self):
-        """Returns keys from model's data attribute as a list."""
-
-        return list(self.datamodel.data.keys())
-    
     def show_view(self, view):
         """Displays the inputted view at the top."""
 
@@ -76,32 +76,20 @@ class Application(tk.Tk):
         """
         Displays the object view corresponding to input at the top.
         
-        
         :arguments
         ----------
         obj : string
             name of asssociated object to be displayed in the Object Page
         """
-
-        self.objectpage.refresh_page(obj)
+        
         self.active_view.update({'object': obj, 'detail': None})
+        self.objectpage.refresh_page(obj)
         self.show_view(self.objectpage)
 
-    def set_object(self, obj):
-        self.active_view.update({'object': obj})
-
-    def get_details(self):
-        """
-        Returns keys from model's data attribute for a given object as a list.
-        """
-
-        return list(self.datamodel.data[self.active_view['object']].keys())
-    
     def display_detail_view(self, det):
         """
         Displays the detail view corresponding to input argument det and
         the current active view.
-        
         
         :arguments
         ----------
@@ -112,20 +100,9 @@ class Application(tk.Tk):
         obj = self.active_view['object']
         message = self.datamodel.data[obj][det]['text']
 
-        self.detailpage.refresh_page(obj, det, message)
         self.active_view.update({'detail': det})
+        self.detailpage.refresh_page(obj, det, message)
         self.show_view(self.detailpage)
-
-    def change_view_detail_to_object(self):
-        """Called from detail page to go back to previous object view."""
-
-        self.active_view.update({'detail': None})
-        self.show_view(self.objectpage)
-
-    def display_settings_view(self):
-        """Displays the settings page on top."""
-
-        self.show_view(self.settingspage)
 
     def close_settings_view(self):
         """Return to last open page before settings were opened."""
@@ -138,5 +115,30 @@ class Application(tk.Tk):
         else:
             self.show_view(self.detailpage)
 
+    def change_view_detail_to_object(self):
+        """Called from detail page to go back to previous object view."""
+
+        self.active_view.update({'detail': None})
+        self.show_view(self.objectpage)
+
+    def display_settings_view(self):
+        """Displays the settings page on top."""
+
+        self.show_view(self.settingspage)
+
+    def get_objects(self):
+        """Returns keys from model's data attribute as a list."""
+
+        return list(self.datamodel.data.keys())
+    
+    def get_details(self):
+        """
+        Returns keys from model's data attribute for a given object as a list.
+        """
+
+        return list(self.datamodel.data[self.active_view['object']].keys())
+    
     def update_theme(self, theme):
+        """Calls method in StyleSheet class to use new `theme`."""
+
         self.stylesheet.set_theme(theme)

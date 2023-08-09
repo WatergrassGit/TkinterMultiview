@@ -25,9 +25,11 @@ class HomePage(ttk.Frame):
 
         self.callbacks = callbacks
 
+        # configure rows and columns with weight
         self.grid_columnconfigure(0, weight=1)
-        self.grid_rowconfigure(2, weight=1)  
+        self.grid_rowconfigure(2, weight=1)
 
+        # set up main sections of homepage
         self.masthead = ttk.Label(self, text="Homepage", style='masthead.TLabel')
         self.intro = ttk.Label(self, text="Welcome to this project! Select a choice below.")
         self.frame = ttk.Frame(self)
@@ -36,14 +38,8 @@ class HomePage(ttk.Frame):
         # buttons to go into the frame
         self.objects = self.callbacks['get_objects']()  # get objects as a list
 
-        self.frame_btns = []
         for obj in self.objects:
-            self.frame_btns.append(
-                ttk.Button(self.frame, text=obj.title(), command=partial(self.display_object_view, obj))
-            )
-
-        for btn in self.frame_btns:
-            btn.pack()
+            ttk.Button(self.frame, text=obj.title(), command=partial(self.display_object_view, obj)).pack()
 
         # set up footer
         self.footer_home_btn = ttk.Button(self.footer, text='Home', command=self.callbacks['display_homepage'])
@@ -58,13 +54,12 @@ class HomePage(ttk.Frame):
         self.footer.grid(row=3, column=0, sticky='w')
 
     def display_object_view(self, obj):
+        """Opens Object Page corresponding selected button's object."""
         self.callbacks['display_object_view'](obj)
 
 
 class ObjectPage(ttk.Frame):
-    """
-    View for selected object page.
-    """
+    """View for selected Object Page."""
 
     def __init__(self, master, callbacks, *args, **kwargs):
         """
@@ -107,7 +102,6 @@ class ObjectPage(ttk.Frame):
 
         # set up footer
         self.footer = ttk.Frame(self)
-
         self.footer.grid(row=3, column=0, sticky='w')        
 
         self.footer_home_btn = ttk.Button(self.footer, text='Home', command=self.callbacks['display_homepage'])
@@ -116,35 +110,28 @@ class ObjectPage(ttk.Frame):
         self.footer_settings_btn.grid(row=0, column=1)
 
     def refresh_page(self, obj):
-        self.header_text.set(f"{obj.title()}")
-        self.masthead.grid(row=0, column=0)
+        """Used to populate the Object Page with `obj` data when called."""
 
-        self.callbacks['set_object'](obj)
+        self.header_text.set(f"{obj.title()}")  # refresh header text
 
         # buttons to go into the frame
         self.details = self.callbacks['get_details']()  # get details as a list
 
+        # removes olds info
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        self.frame_btns = []
+        # adds new info
         for det in self.details:
-            self.frame_btns.append(
-                ttk.Button(self.frame, text=det.title(), command=partial(self.display_detail_view, det))
-            )
-
-        for btn in self.frame_btns:
-            btn.pack()
-
-
+            ttk.Button(self.frame, text=det.title(), command=partial(self.display_detail_view, det)).pack()
+            
     def display_detail_view(self, det):
+        """Opens Detail Page corresponding selected button's detail."""
         self.callbacks['display_detail_view'](det)
 
 
 class DetailPage(ttk.Frame):
-    """
-    View for selected detail page.
-    """
+    """View for selected detail page."""
 
     def __init__(self, master, callbacks, *args, **kwargs):
         """
@@ -188,7 +175,6 @@ class DetailPage(ttk.Frame):
 
         # set up footer
         self.footer = ttk.Frame(self)
-
         self.footer.grid(row=3, column=0, sticky='w')        
 
         self.footer_home_btn = ttk.Button(self.footer, text='Home', command=self.callbacks['display_homepage'])
@@ -197,8 +183,11 @@ class DetailPage(ttk.Frame):
         self.footer_settings_btn.grid(row=0, column=1)
 
     def refresh_page(self, obj, det, message):
+        """Used to populate the Detail Page with detail data when called."""
+
         self.header_text.set(f"{obj.title()}: {det.title()}")
 
+        # destroy old message and replace with new message
         for widget in self.frame.winfo_children():
             widget.destroy()
 
@@ -206,9 +195,7 @@ class DetailPage(ttk.Frame):
 
 
 class SettingsPage(ttk.Frame):
-    """
-    View for Settings.
-    """
+    """View for Settings."""
 
     def __init__(self, master, callbacks, *args, **kwargs):
         super().__init__(master, *args, **kwargs)
@@ -221,7 +208,6 @@ class SettingsPage(ttk.Frame):
 
         # section for masthead
         self.masthead = ttk.Frame(self)
-
         self.masthead.grid(row=0, column=0, sticky='nswe')
         self.masthead.grid_columnconfigure(1, weight=1)
 
@@ -249,13 +235,13 @@ class SettingsPage(ttk.Frame):
 
         # section for footer
         self.footer = ttk.Frame(self)
-
         self.footer.grid(row=3, column=0, sticky='w')
 
         self.footer_home_btn = ttk.Button(self.footer, text='Home', command=self.callbacks['display_homepage'])
         self.footer_home_btn.grid(row=0, column=0)
 
     def change_lighting(self):
+        """Tells application to change between light and dark theme."""
 
         lighting = self.lighting.get()
         if self.theme != lighting:

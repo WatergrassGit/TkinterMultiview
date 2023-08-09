@@ -3,6 +3,11 @@ from tkinter import ttk
 
 
 class StyleSheet(ttk.Style):
+    """
+    The StyleSheet class holds the default styles and
+    has methods allowing the application to change select styles.
+    """
+
     def __init__(self, *args, **kwargs):
 
         super().__init__(*args, **kwargs)
